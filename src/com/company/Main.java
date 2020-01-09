@@ -6,6 +6,7 @@ import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import javax.swing.JFrame;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 import java.util.Scanner;
 
 
@@ -151,11 +152,13 @@ public class Main{
 
 
 
-    randomDistances(schoolMap);
-    System.out.println(schoolMap.getEdgeWeight(schoolMap.getEdge("Dining Hall","Science Building")));
+   // randomDistances(schoolMap);
+   // System.out.println(schoolMap.getEdgeWeight(schoolMap.getEdge("Dining Hall","Science Building")));
 
+     //  System.out.println(schoolMap.edgesOf("Visual Arts"));
+        System.out.println(schoolMap.outgoingEdgesOf("Visual Arts"));
 
-
+      System.out.println(traversalNode(schoolMap));
 
 
     // Map Visualizer
@@ -293,25 +296,67 @@ public class Main{
 
     }
 
-    private static void traversalNode(Graph<String, DefaultWeightedEdge> schoolMap) {
-
+    private static int traversalNode(Graph<String, DefaultWeightedEdge> schoolMap) {
         int runningCount = 0;
         String response = "";
         Scanner in = new Scanner(System.in);
 
         System.out.println("Hello welcome to traversing the school map, please type a starting position you want to start at");
 
-        String startingPoint = in.next();
+        String startingPoint = in.nextLine();
 
-        while(response == "exit") {
-            System.out.println("Thank you for your starting point");
+        System.out.println("Thank you for your starting point");
 
-            for(int i = 0; i ; i++) {
+        schoolMap.edgesOf(startingPoint);
 
+        while(!response.equals("exit") || !startingPoint.equals("exit")){
+
+
+          int possiblePaths = schoolMap.outgoingEdgesOf(startingPoint).size();
+
+            Object[] arr = schoolMap.outgoingEdgesOf(startingPoint).toArray();
+
+            for(int i = 0; i < possiblePaths; i++) {
+
+                System.out.println("Would you like to go to " + arr[i]);
 
             }
 
+            System.out.println("Please type in which path you would like to go to or hit exit to stop");
+
+            response = in.nextLine();
+
+           // startingPoint = response;
+
+
+
+
+         /*
+            for(int i = 0; i < possiblePaths; i++) {
+
+                if(response.equals(arr[i])) {
+
+                    runningCount += schoolMap.getEdgeWeight(schoolMap.getEdge(startingPoint,(String)arr[i]));
+                    System.out.println(schoolMap.getEdgeWeight(schoolMap.getEdge(startingPoint,(String)arr[i])));
+                }
+            }
+
+          */
+
+            for(int i = 0; i < possiblePaths; i++) {
+
+                if(schoolMap.getEdge(startingPoint,response) == arr[i]) {
+
+                    runningCount += schoolMap.getEdgeWeight(schoolMap.getEdge(startingPoint,response));
+                  //  System.out.println(schoolMap.getEdgeWeight(schoolMap.getEdge(startingPoint,response)));
+                }
+            }
+
+            startingPoint = response;
         }
+
+        System.out.println("↓ Total path Distance");
+        return runningCount;
 
     }
 }
