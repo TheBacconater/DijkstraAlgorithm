@@ -1,14 +1,23 @@
 package com.company;
 
+import com.mxgraph.view.mxGraph;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
+import javax.swing.JFrame;
+import java.util.Scanner;
 
-public class Main {
+
+
+
+
+public class Main{
 
     public static void main(String[] args) {
 
         Graph<String, DefaultWeightedEdge> schoolMap = new DefaultDirectedWeightedGraph<>(DefaultWeightedEdge.class);
+
       //creating all verticies or Nodes
 
         schoolMap.addVertex("Security Gate");
@@ -139,7 +148,37 @@ public class Main {
         schoolMap.setEdgeWeight("Dining Hall","Science Building",1);
         schoolMap.setEdgeWeight("Dining Hall","Entrepreneurial Center",2);
         schoolMap.setEdgeWeight("Dining Hall","Rock",3);
-//
+
+
+
+    randomDistances(schoolMap);
+    System.out.println(schoolMap.getEdgeWeight(schoolMap.getEdge("Dining Hall","Science Building")));
+
+
+
+
+
+    // Map Visualizer
+/*
+        mxGraph graph = new mxGraph();
+        Object parent = graph.getDefaultParent();
+
+        graph.getModel().beginUpdate();
+        try
+        {
+            Object v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80,
+                    30);
+            Object v2 = graph.insertVertex(parent, null, "World!",
+                    240, 150, 80, 30);
+            graph.insertEdge(parent, null, "Edge", v1, v2);
+        }
+        finally
+        {
+            graph.getModel().endUpdate();
+        }
+
+
+ */
 
 
 
@@ -195,11 +234,84 @@ public class Main {
 
 
 
+    }
+
+    private static void randomDistances(Graph<String, DefaultWeightedEdge> schoolMap) {
+
+        schoolMap.setEdgeWeight("Security Gate","Rock",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Security Gate","Senior Lot",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Security Gate","Administration",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Security Gate","Teachers Lot",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Senior Lot","Security Gate",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Senior Lot","Administration",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Teachers Lot","US Classes",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Teachers Lot","Security Gate",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Teachers Lot","Girls Dorm",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("US Classes","Teachers Lot",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("US Classes","Visual Arts",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("US Classes","Administration",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Administration","Security Gate",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Administration","US Classes",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Administration","Senior Lot",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Rock","Security Gate",(int)((Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Rock","Dining Hall",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Rock","Entrepreneurial Center",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Visual Arts","US Classes",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Visual Arts","Girls Dorm",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Entrepreneurial Center","Dining Hall",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Entrepreneurial Center","Rock",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Entrepreneurial Center","Chapel",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Girls Dorm","Teachers Lot",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Girls Dorm","Alumni",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Girls Dorm","Visual Arts",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Alumni","Administration",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Alumni","Girls Dorm",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Alumni","Chapel",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Chapel","Alumni",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Chapel","Entrepreneurial Center",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Chapel","Boys Dorm",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Boys Dorm","Chapel",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Boys Dorm","Science Building",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Science Building","Boys Dorm",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Science Building","Dining Hall",((int)(Math.random() * 20) + 1));
+
+        schoolMap.setEdgeWeight("Dining Hall","Science Building",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Dining Hall","Entrepreneurial Center",((int)(Math.random() * 20) + 1));
+        schoolMap.setEdgeWeight("Dining Hall","Rock",((int)(Math.random() * 20) + 1));
+
+    }
+
+    private static void traversalNode(Graph<String, DefaultWeightedEdge> schoolMap) {
+
+        int runningCount = 0;
+        String response = "";
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Hello welcome to traversing the school map, please type a starting position you want to start at");
+
+        String startingPoint = in.next();
+
+        while(response == "exit") {
+            System.out.println("Thank you for your starting point");
+
+            for(int i = 0; i ; i++) {
 
 
+            }
 
-
-
+        }
 
     }
 }
