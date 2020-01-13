@@ -326,29 +326,13 @@ public class Main{
 
             response = in.nextLine();
 
-           // startingPoint = response;
-
-
-
-
-         /*
-            for(int i = 0; i < possiblePaths; i++) {
-
-                if(response.equals(arr[i])) {
-
-                    runningCount += schoolMap.getEdgeWeight(schoolMap.getEdge(startingPoint,(String)arr[i]));
-                    System.out.println(schoolMap.getEdgeWeight(schoolMap.getEdge(startingPoint,(String)arr[i])));
-                }
-            }
-
-          */
 
             for(int i = 0; i < possiblePaths; i++) {
 
                 if(schoolMap.getEdge(startingPoint,response) == arr[i]) {
 
                     runningCount += schoolMap.getEdgeWeight(schoolMap.getEdge(startingPoint,response));
-                  //  System.out.println(schoolMap.getEdgeWeight(schoolMap.getEdge(startingPoint,response)));
+
                 }
             }
 
